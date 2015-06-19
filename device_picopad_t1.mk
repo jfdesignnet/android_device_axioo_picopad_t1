@@ -9,7 +9,7 @@ DEVICE_PACKAGE_OVERLAYS += device/axioo/picopad_t1/overlay
 
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := device/axioo/picopad_t1/kernel
+	LOCAL_KERNEL := device/axioo/picopad_t1/prebuilt/kernel
 else
 	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
 endif
@@ -19,6 +19,17 @@ PRODUCT_COPY_FILES += \
 
 $(call inherit-product, build/target/product/full.mk)
 
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.secure=0 \
+    ro.adb.secure=0
+
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_picopad_t1
 PRODUCT_DEVICE := picopad_t1
+
+PRODUCT_COPY_FILES_OVERRIDES += \
+    root/fstab.goldfish \
+    root/init.goldfish.rc \
+    root/ueventd.goldfish.rc \
+    recovery/root/fstab.goldfish
+    
